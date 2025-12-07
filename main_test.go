@@ -279,6 +279,7 @@ func TestProcessItems_Cancellation(t *testing.T) {
 	}()
 
 	results, err := ProcessItems(ctx, items)
+
 	if err != context.Canceled {
 		t.Errorf("Expected context.Canceled, got %v", err)
 	}
