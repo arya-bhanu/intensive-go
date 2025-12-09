@@ -10,20 +10,14 @@ import (
 const validToken = "secret"
 
 func main() {
-	fmt.Println("Hello World")
 	server := SetupServer()
-	if err := http.ListenAndServe(":3000", server); err != nil {
+	if err := http.ListenAndServe(":8080", server); err != nil {
 		fmt.Printf("error on http.ListenAndServe; error=%s", err.Error())
 	}
 }
 
-type Server struct {
-	ChiMuxRouter *chi.Mux
-}
-
-func SetupServer() *Server {
+func SetupServer() *chi.Mux {
 	r := chi.NewRouter()
-	// protected route
 	r.Group(func(r chi.Router) {
 		r.Use(AuthMiddleware)
 		r.HandleFunc("/secure", secureHandler)
@@ -31,9 +25,7 @@ func SetupServer() *Server {
 	r.Group(func(r chi.Router) {
 		r.Get("/hello", helloHandler)
 	})
-	return &Server{
-		ChiMuxRouter: r,
-	}
+	return r
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
@@ -57,8 +49,4 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		}
 		next.ServeHTTP(w, r)
 	})
-}
-
-func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	s.ChiMuxRouter.ServeHTTP(w, r)
 }

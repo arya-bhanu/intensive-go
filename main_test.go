@@ -8,7 +8,6 @@ import (
 	"testing"
 )
 
-// Test array for convenience
 var testCases = []struct {
 	name       string
 	method     string
