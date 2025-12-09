@@ -19,7 +19,7 @@ var testCases = []struct {
 	{
 		name:       "Public /hello endpoint with no token",
 		method:     "GET",
-		url:        "/hello",
+		url:        "/api/hello",
 		token:      "",
 		wantStatus: http.StatusOK,
 		wantBody:   "Hello!",
@@ -27,7 +27,7 @@ var testCases = []struct {
 	{
 		name:       "Secure /secure endpoint no token",
 		method:     "GET",
-		url:        "/secure",
+		url:        "/api/secure",
 		token:      "",
 		wantStatus: http.StatusUnauthorized,
 		wantBody:   "",
@@ -35,7 +35,7 @@ var testCases = []struct {
 	{
 		name:       "Secure /secure endpoint invalid token",
 		method:     "GET",
-		url:        "/secure",
+		url:        "/api/secure",
 		token:      "invalid",
 		wantStatus: http.StatusUnauthorized,
 		wantBody:   "",
@@ -43,7 +43,7 @@ var testCases = []struct {
 	{
 		name:       "Secure /secure endpoint correct token",
 		method:     "GET",
-		url:        "/secure",
+		url:        "/api/secure",
 		token:      "secret",
 		wantStatus: http.StatusOK,
 		wantBody:   "You are authorized!",
@@ -51,7 +51,7 @@ var testCases = []struct {
 	{
 		name:       "Public /hello endpoint with invalid token",
 		method:     "GET",
-		url:        "/hello",
+		url:        "/api/hello",
 		token:      "wrong",
 		wantStatus: http.StatusOK,
 		wantBody:   "Hello!",
@@ -59,7 +59,7 @@ var testCases = []struct {
 	{
 		name:       "Public /hello endpoint with correct token",
 		method:     "GET",
-		url:        "/hello",
+		url:        "/api/hello",
 		token:      "secret",
 		wantStatus: http.StatusOK,
 		wantBody:   "Hello!",
@@ -67,7 +67,7 @@ var testCases = []struct {
 	{
 		name:       "Different method on /secure with valid token",
 		method:     "POST",
-		url:        "/secure",
+		url:        "/api/secure",
 		token:      "secret",
 		wantStatus: http.StatusOK,
 		wantBody:   "You are authorized!",
@@ -75,7 +75,7 @@ var testCases = []struct {
 	{
 		name:       "Different method on /secure with no token",
 		method:     "POST",
-		url:        "/secure",
+		url:        "/api/secure",
 		token:      "",
 		wantStatus: http.StatusUnauthorized,
 		wantBody:   "",

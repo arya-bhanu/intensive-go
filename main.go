@@ -18,11 +18,11 @@ func main() {
 
 func SetupServer() *chi.Mux {
 	r := chi.NewRouter()
-	r.Group(func(r chi.Router) {
-		r.Use(AuthMiddleware)
-		r.HandleFunc("/secure", secureHandler)
-	})
-	r.Group(func(r chi.Router) {
+	r.Route("/api", func(r chi.Router) {
+		r.Group(func(r chi.Router) {
+			r.Use(AuthMiddleware)
+			r.HandleFunc("/secure", secureHandler)
+		})
 		r.Get("/hello", helloHandler)
 	})
 	return r
